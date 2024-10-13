@@ -95,3 +95,17 @@
 .logoutButton:hover {
   background-color: #f0f0f0;
 }
+/* AddHotel Button styling */
+.addHotelButton {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: #3b82f6; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.addHotelButton:hover {
+  background-color: #2563eb; /* Darker blue */
+}

@@ -3,7 +3,7 @@ import axiosInstance from "./axiosInstance";
 // Function to fetch all hotels (GET)
 export const getHotels = () => {
   return axiosInstance
-    .get("/api/HotelArticle")
+    .get("/HotelArticle")
     .then((response) => response.data)
     .catch((error) => {
       console.error("Error fetching hotels:", error);
@@ -14,7 +14,7 @@ export const getHotels = () => {
 // Function to fetch a hotel by ID (GET)
 export const getHotelById = (id) => {
   return axiosInstance
-    .get(`/api/HotelArticle/${id}`)
+    .get(`/HotelArticle/${id}`)
     .then((response) => response.data)
     .catch((error) => {
       console.error(`Error fetching hotel with id ${id}:`, error);
@@ -25,18 +25,30 @@ export const getHotelById = (id) => {
 // Function to create a new hotel article (POST)
 export const createHotel = (hotelData) => {
   return axiosInstance
-    .post("/api/HotelArticle", hotelData)
+    .post("/HotelArticle", hotelData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // Ensure correct content-type for file uploads
+      },
+    })
     .then((response) => response.data)
     .catch((error) => {
       console.error("Error creating hotel:", error);
-      throw new Error("Failed to create hotel");
+      if (error.response) {
+        // Server-side error
+        throw new Error(
+          error.response.data.message || "Failed to create hotel"
+        );
+      } else {
+        // Client-side or network error
+        throw new Error("Failed to create hotel due to network issues");
+      }
     });
 };
 
 // Function to update a hotel article by ID (PUT)
 export const updateHotel = (id, hotelData) => {
   return axiosInstance
-    .put(`/api/HotelArticle/${id}`, hotelData)
+    .put(`/HotelArticle/${id}`, hotelData)
     .then(() => true)
     .catch((error) => {
       console.error(`Error updating hotel with id ${id}:`, error);
@@ -47,7 +59,7 @@ export const updateHotel = (id, hotelData) => {
 // Function to delete a hotel article by ID (DELETE)
 export const deleteHotel = (id) => {
   return axiosInstance
-    .delete(`/api/HotelArticle/${id}`)
+    .delete(`/HotelArticle/${id}`)
     .then(() => true)
     .catch((error) => {
       console.error(`Error deleting hotel with id ${id}:`, error);

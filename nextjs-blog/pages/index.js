@@ -24,8 +24,8 @@ export default function Home({ hotels }) {
       <main>
         <h2>Available Hotels</h2>
         <div className="hotel-list">
-          {hotels.map((hotel) => (
-            <HotelCard key={hotel.id} hotel={hotel} />
+          {hotels.map((hotel, index) => (
+            <HotelCard key={`${hotel.HotelID}-${index}`} hotel={hotel} />
           ))}
         </div>
       </main>

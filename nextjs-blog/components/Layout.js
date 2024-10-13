@@ -2,10 +2,10 @@
 import Header from "./Header";
 import Footer from "./Footer";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, isLoggedIn, user, handleLogout }) => {
   return (
     <div>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} user={user} handleLogout={handleLogout} />
       <main>{children}</main>
       <Footer />
     </div>

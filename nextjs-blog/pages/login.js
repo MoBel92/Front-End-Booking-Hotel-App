@@ -1,15 +1,15 @@
 import { useState } from "react";
+import { useRouter } from "next/router"; // Import useRouter for redirection
 import { getUsers } from "../api/users";
 import styles from "../styles/LoginForm.module.css";
 
-const Login = () => {
+const Login = ({ setIsLoggedIn, setUser }) => {
+  // Passed down setIsLoggedIn and setUser from a higher level component
   const [credentials, setCredentials] = useState({
     email: "",
-    password: "",
   });
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const router = useRouter(); // Initialize useRouter for redirection
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,18 +25,20 @@ const Login = () => {
 
     getUsers()
       .then((users) => {
-        const user = users.find(
-          (user) =>
-            user.email === credentials.email &&
-            user.password === credentials.password
-        );
+        const user = users.find((user) => user.email === credentials.email);
 
         if (user) {
+          // Update the global state to reflect that the user is logged in
           setIsLoggedIn(true);
-          setLoggedInUser(user);
+          setUser(user);
+
           console.log("Login successful:", user);
+          // Redirect to the home page after login
+          setTimeout(() => {
+            router.push("/"); // Redirect to the home page
+          }, 1000); // Delay of 1 second to show the welcome message
         } else {
-          setError("Invalid email or password.");
+          setError("Email not found.");
         }
       })
       .catch((error) => {
@@ -62,27 +64,10 @@ const Login = () => {
             required
           />
         </div>
-        <div className={styles.inputGroup}>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={credentials.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-            required
-          />
-        </div>
         <button type="submit" className={styles.loginButton}>
           Login
         </button>
       </form>
-      {isLoggedIn && (
-        <div className={styles.welcomeMessage}>
-          <p>Welcome, {loggedInUser.name}!</p>{" "}
-          {/* Display logged-in user's name */}
-        </div>
-      )}
     </div>
   );
 };

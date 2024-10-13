@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router"; // Import useRouter for redirection
 import { addUser } from "../api/users";
 import styles from "../styles/Register.module.css";
 
@@ -13,6 +14,7 @@ const Register = () => {
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const router = useRouter(); // Initialize the router for redirection
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,6 +32,9 @@ const Register = () => {
     addUser(formData)
       .then(() => {
         setSuccess("Registration successful!");
+        setTimeout(() => {
+          router.push("/login"); // Redirect to the login page after success
+        }, 1000); // Delay to show success message for 1 second
         setFormData({
           username: "",
           name: "",
