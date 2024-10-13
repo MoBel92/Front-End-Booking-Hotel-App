@@ -1,0 +1,109 @@
+/* styles/Footer.module.css */
+.footerContainer {
+  width: 100%;
+  margin-top: 24px;
+  background-color: #1e293b; /* Slate-900 from Tailwind */
+  color: #d1d5db; /* Gray-300 from Tailwind */
+  padding: 32px 8px;
+}
+
+.footerSections {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 32px;
+  border-bottom: 2px solid #4b5563; /* Gray-600 from Tailwind */
+  padding-bottom: 32px;
+}
+
+.footerSections > div {
+  flex: 1 1 200px;
+  margin-right: 20px;
+}
+
+.sectionTitle {
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-top: 8px;
+}
+
+.sectionItem {
+  padding: 8px 0;
+  color: #6b7280; /* Gray-500 from Tailwind */
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.sectionItem:hover {
+  color: #ffffff;
+}
+
+.newsletterSection {
+  flex: 1 1 100%;
+  padding-top: 16px;
+}
+
+.newsletterTitle {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.newsletterDescription {
+  padding: 16px 0;
+}
+
+.newsletterForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.emailInput {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+.subscribeButton {
+  padding: 8px;
+  background-color: #3b82f6; /* Blue-500 from Tailwind */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.footerBottom {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 16px 8px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
+  color: #6b7280; /* Gray-500 from Tailwind */
+}
+
+.footerRights {
+  padding: 16px 0;
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  margin: 16px auto;
+  font-size: 24px;
+}
+
+.socialIcon {
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.socialIcon:hover {
+  color: #ffffff;
+}

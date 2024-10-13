@@ -1,0 +1,51 @@
+/* styles/Navbar.module.css */
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Adjust the gap between inputs */
+  padding: 20px;
+}
+
+.input {
+  padding: 12px;
+  font-size: 1rem;
+  border: 2px solid #ccc; /* Adds a light border */
+  border-radius: 8px; /* Soft rounded corners */
+  outline: none;
+  width: 180px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: all 0.3s ease-in-out; /* Smooth transition for focus and hover */
+}
+
+.input:focus {
+  border-color: #0055a5; /* Highlight border on focus */
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 85, 165, 0.3); /* More pronounced shadow on focus */
+}
+
+.input:hover {
+  border-color: #0073e6; /* Change border color on hover */
+}
+
+.searchButton {
+  background-color: #ffa500;
+  color: white;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.searchButton:hover {
+  background-color: #ff8800;
+}
+
+.searchButton:focus {
+  outline: none;
+  box-shadow: 0 4px 10px rgba(255, 136, 0, 0.5); /* Highlighted shadow on focus */
+}
