@@ -64,7 +64,7 @@ const Footer = () => {
         <div className={styles.newsletterSection}>
           <p className={styles.newsletterTitle}>Subscribe to our newsletter</p>
           <p className={styles.newsletterDescription}>
-            The latest updates, articles, and resources, sent to your inbox
+            The latest updates, offers, and resources, sent to your inbox
             weekly.
           </p>
           <form className={styles.newsletterForm}>

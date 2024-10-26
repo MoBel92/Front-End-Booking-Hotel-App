@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createHotel } from "../api/hotels"; // Ensure this API is handling the files on the backend
 import styles from "../styles/AddHotel.module.css";
 
@@ -19,7 +19,7 @@ const AddHotel = () => {
   const [success, setSuccess] = useState(null); // To handle success messages
   const [imageFiles, setImageFiles] = useState([]); // Store the actual file objects
 
-  // This is the handleChange function
+  // Handle input changes for text fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setHotel((prevHotel) => ({
@@ -28,11 +28,13 @@ const AddHotel = () => {
     }));
   };
 
+  // Handle image file selection
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files); // Get selected files
     setImageFiles(files); // Store file objects for later submission
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     setError(null); // Clear previous errors
@@ -54,7 +56,8 @@ const AddHotel = () => {
       formData.append("images", file); // Ensure backend expects `images[]` array
     });
 
-    createHotel(formData) // Call the API to create a new hotel
+    // Call the API to create a new hotel
+    createHotel(formData)
       .then((response) => {
         setSuccess("Hotel added successfully!");
         setHotel({
@@ -74,6 +77,13 @@ const AddHotel = () => {
         setError(error.message || "Failed to add hotel.");
       });
   };
+
+  // Clean up image object URLs when the component unmounts to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      imageFiles.forEach((file) => URL.revokeObjectURL(file));
+    };
+  }, [imageFiles]);
 
   return (
     <div className={styles.container}>
@@ -172,6 +182,7 @@ const AddHotel = () => {
                   key={index}
                   src={URL.createObjectURL(file)}
                   alt={`Preview ${index}`}
+                  className={styles["image-thumbnail"]}
                 />
               ))}
             </div>

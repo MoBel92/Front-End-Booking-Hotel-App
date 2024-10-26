@@ -2,7 +2,8 @@ import Link from "next/link"; // Add Link for navigation to hotel details
 import styles from "../styles/HotelCard.module.css";
 
 const HotelCard = ({ hotel }) => {
-  console.log(hotel.images[0]);
+  console.log(hotel);
+  console.log("Image paths: ", hotel.imagePaths);
   // Construct the location string, skipping empty fields
   const location = [
     hotel.street,
@@ -18,11 +19,17 @@ const HotelCard = ({ hotel }) => {
     <Link href={`/hotel/${hotel.hotelID}`}>
       <div className={styles.card}>
         {/* Display the first image if available */}
-        {hotel.images && hotel.images.length > 0 && (
+        {hotel.imagePaths && hotel.imagePaths.length > 0 ? (
           <img
             className={styles.hotelImage}
-            src={hotel.images[0]}
+            src={`${hotel.imagePaths[0]}`}
             alt={`Hotel ${hotel.hotelName}`}
+          />
+        ) : (
+          <img
+            className={styles.hotelImage}
+            src="/default-hotel-image.jpg" // Fallback if no image
+            alt="Default hotel"
           />
         )}
         <div className={styles.cardContent}>

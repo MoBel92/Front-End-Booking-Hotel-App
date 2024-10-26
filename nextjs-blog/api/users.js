@@ -4,11 +4,14 @@ import axiosInstance from "./axiosInstance";
 export const getUsers = () => {
   return axiosInstance
     .get("/User")
-    .then((response) => response.data)
+    .then((response) => {
+      console.log(response.data); // Log the response data
+      return response.data; // Return the data for further use
+    })
     .catch((error) => {
       throw error.response
-        ? error.response.data
-        : new Error("Failed to fetch users");
+        ? error.response.data // If the error has a response, throw the response data
+        : new Error("Failed to fetch users"); // If there's no response, throw a generic error
     });
 };
 
