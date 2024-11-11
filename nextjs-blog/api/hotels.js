@@ -11,14 +11,16 @@ export const getHotels = () => {
     });
 };
 
-// Function to fetch a hotel by ID (GET)
 export const getHotelById = (id) => {
   return axiosInstance
     .get(`/HotelArticle/${id}`)
-    .then((response) => response.data)
+    .then((response) => {
+      console.log("API response:", response.data); // Log the API response
+      return response.data;
+    })
     .catch((error) => {
       console.error(`Error fetching hotel with id ${id}:`, error);
-      return null; // Return null in case of error
+      return null; // Return null if there’s an error
     });
 };
 

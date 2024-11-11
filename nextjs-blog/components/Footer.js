@@ -68,12 +68,20 @@ const Footer = () => {
             weekly.
           </p>
           <form className={styles.newsletterForm}>
+            <label htmlFor="newsletterEmail" className={styles.hiddenLabel}>
+              Email address
+            </label>
             <input
               type="email"
+              id="newsletterEmail" // Unique id for the email input
+              name="email" // Name attribute for the email input
               placeholder="Enter email address"
               className={styles.emailInput}
+              required
             />
-            <button className={styles.subscribeButton}>Subscribe</button>
+            <button type="submit" className={styles.subscribeButton}>
+              Subscribe
+            </button>
           </form>
         </div>
       </div>

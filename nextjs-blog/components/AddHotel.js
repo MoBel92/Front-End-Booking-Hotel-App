@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { createHotel } from "../api/hotels"; // Ensure this API is handling the files on the backend
+import { useState } from "react";
+import { createHotel } from "../api/hotels";
 import styles from "../styles/AddHotel.module.css";
 
 const AddHotel = () => {
@@ -12,184 +12,152 @@ const AddHotel = () => {
     state: "",
     zipCode: "",
     country: "",
-    images: [], // Images array
   });
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  const [error, setError] = useState(null); // To handle errors
-  const [success, setSuccess] = useState(null); // To handle success messages
-  const [imageFiles, setImageFiles] = useState([]); // Store the actual file objects
-
-  // Handle input changes for text fields
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setHotel((prevHotel) => ({
-      ...prevHotel,
-      [name]: value,
-    }));
+    setHotel((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle image file selection
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files); // Get selected files
-    setImageFiles(files); // Store file objects for later submission
-  };
-
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Clear previous errors
-    setSuccess(null); // Clear previous success messages
 
-    // Create FormData to send hotel data along with files
-    const formData = new FormData();
-    formData.append("hotelName", hotel.hotelName);
-    formData.append("hotelDescription", hotel.hotelDescription);
-    formData.append("hotelStars", hotel.hotelStars);
-    formData.append("street", hotel.street);
-    formData.append("city", hotel.city);
-    formData.append("state", hotel.state);
-    formData.append("zipCode", hotel.zipCode);
-    formData.append("country", hotel.country);
-
-    // Append all images to the form data
-    imageFiles.forEach((file) => {
-      formData.append("images", file); // Ensure backend expects `images[]` array
-    });
-
-    // Call the API to create a new hotel
-    createHotel(formData)
-      .then((response) => {
-        setSuccess("Hotel added successfully!");
-        setHotel({
-          hotelName: "",
-          hotelDescription: "",
-          hotelStars: 1,
-          street: "",
-          city: "",
-          state: "",
-          zipCode: "",
-          country: "",
-          images: [], // Reset images
-        });
-        setImageFiles([]); // Reset image files
-      })
-      .catch((error) => {
-        setError(error.message || "Failed to add hotel.");
+    try {
+      await createHotel(hotel);
+      setSuccessMessage("Hotel added successfully!");
+      setHotel({
+        hotelName: "",
+        hotelDescription: "",
+        hotelStars: 1,
+        street: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
       });
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
-
-  // Clean up image object URLs when the component unmounts to prevent memory leaks
-  useEffect(() => {
-    return () => {
-      imageFiles.forEach((file) => URL.revokeObjectURL(file));
-    };
-  }, [imageFiles]);
 
   return (
     <div className={styles.container}>
-      <h1>Add a New Hotel</h1>
-      {error && <p className={styles["error-message"]}>{error}</p>}
-      {success && <p className={styles["success-message"]}>{success}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className={styles["form-group"]}>
-          <label>Hotel Name</label>
+      <h2 className={styles.heading}>Add New Hotel</h2>
+      {successMessage && (
+        <p className={styles.successMessage}>{successMessage}</p>
+      )}
+      {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+      <form onSubmit={handleSubmit} className={styles.form}>
+        {/* Input fields for hotel details */}
+        <div className={styles.formGroup}>
+          <label htmlFor="hotelName">Hotel Name</label>
           <input
             type="text"
+            id="hotelName"
             name="hotelName"
+            placeholder="Hotel Name"
             value={hotel.hotelName}
             onChange={handleChange}
             required
+            autoComplete="organization"
           />
         </div>
-        <div className={styles["form-group"]}>
-          <label>Hotel Description</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="hotelDescription">Hotel Description</label>
           <textarea
+            id="hotelDescription"
             name="hotelDescription"
+            placeholder="Hotel Description"
             value={hotel.hotelDescription}
             onChange={handleChange}
             required
+            autoComplete="off"
           />
         </div>
-        <div className={styles["form-group"]}>
-          <label>Hotel Stars</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="hotelStars">Hotel Stars</label>
           <input
             type="number"
+            id="hotelStars"
             name="hotelStars"
+            placeholder="Hotel Stars"
             value={hotel.hotelStars}
             onChange={handleChange}
             min="1"
             max="5"
             required
+            autoComplete="off"
           />
         </div>
-        <div className={styles["form-group"]}>
-          <label>Street</label>
+        {/* Address Fields */}
+        <div className={styles.formGroup}>
+          <label htmlFor="street">Street Address</label>
           <input
             type="text"
+            id="street"
             name="street"
+            placeholder="Street Address"
             value={hotel.street}
             onChange={handleChange}
             required
+            autoComplete="street-address"
           />
         </div>
-        <div className={styles["form-group"]}>
-          <label>City</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="city">City</label>
           <input
             type="text"
+            id="city"
             name="city"
+            placeholder="City"
             value={hotel.city}
             onChange={handleChange}
             required
+            autoComplete="address-level2"
           />
         </div>
-        <div className={styles["form-group"]}>
-          <label>State</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="state">State</label>
           <input
             type="text"
+            id="state"
             name="state"
+            placeholder="State"
             value={hotel.state}
             onChange={handleChange}
             required
+            autoComplete="address-level1"
           />
         </div>
-        <div className={styles["form-group"]}>
-          <label>Zip Code</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="zipCode">Zip Code</label>
           <input
             type="text"
+            id="zipCode"
             name="zipCode"
+            placeholder="Zip Code"
             value={hotel.zipCode}
             onChange={handleChange}
             required
+            autoComplete="postal-code"
           />
         </div>
-        <div className={styles["form-group"]}>
-          <label>Country</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="country">Country</label>
           <input
             type="text"
+            id="country"
             name="country"
+            placeholder="Country"
             value={hotel.country}
             onChange={handleChange}
             required
+            autoComplete="country"
           />
         </div>
-        <div className={styles["form-group"]}>
-          <label>Images</label>
-          <input type="file" multiple onChange={handleImageChange} />
-          {imageFiles.length > 0 && (
-            <div className={styles["image-preview"]}>
-              {imageFiles.map((file, index) => (
-                <img
-                  key={index}
-                  src={URL.createObjectURL(file)}
-                  alt={`Preview ${index}`}
-                  className={styles["image-thumbnail"]}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className={styles["button-container"]}>
+        <div className={styles.buttonContainer}>
           <button type="submit">Add Hotel</button>
         </div>
       </form>

@@ -15,6 +15,8 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <input
         type="text"
+        id="location" // Unique id for the input
+        name="location" // Name attribute for autofill support
         placeholder="Location"
         value={location}
         onChange={(e) => setLocation(e.target.value)}
@@ -22,17 +24,23 @@ const Navbar = () => {
       />
       <input
         type="date"
+        id="checkInDate" // Unique id for the input
+        name="checkInDate" // Name attribute for autofill support
         value={checkInDate}
         onChange={(e) => setCheckInDate(e.target.value)}
         className={styles.input}
       />
       <input
         type="date"
+        id="checkOutDate" // Unique id for the input
+        name="checkOutDate" // Name attribute for autofill support
         value={checkOutDate}
         onChange={(e) => setCheckOutDate(e.target.value)}
         className={styles.input}
       />
       <select
+        id="guests" // Unique id for the select
+        name="guests" // Name attribute for autofill support
         value={guests}
         onChange={(e) => setGuests(e.target.value)}
         className={styles.input}
